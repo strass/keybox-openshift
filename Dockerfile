@@ -12,4 +12,5 @@ RUN apt-get update && apt-get -y install wget && \
 
 WORKDIR /KeyBox-jetty
 USER 1001
+EXPOSE 8443
 CMD ["/KeyBox-jetty/startKeyBox.sh"]
