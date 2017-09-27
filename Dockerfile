@@ -11,4 +11,5 @@ RUN apt-get update && apt-get -y install wget && \
     chgrp -R 0 /KeyBox-jetty && chmod -R g=u /KeyBox-jetty
 
 WORKDIR /KeyBox-jetty
+USER 1001
 CMD ["/KeyBox-jetty/startKeyBox.sh"]
