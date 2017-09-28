@@ -1,5 +1,8 @@
 # KeyBox in Docker and OpenShift
 
+[![Docker Build Status](https://img.shields.io/docker/build/tobru/keybox.svg)](https://hub.docker.com/r/tobru/keybox/)
+[![Docker Automated builid](https://img.shields.io/docker/automated/tobru/keybox.svg)](https://hub.docker.com/r/tobru/keybox/)
+
 This repository provides a Dockerfile and an OpenShift template
 for [KeyBox](https://github.com/skavanagh/KeyBox).
 
