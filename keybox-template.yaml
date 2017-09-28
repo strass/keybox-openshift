@@ -1,0 +1,132 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: keybox
+  annotations:
+    description: "KeyBox - Webbased SSH Console"
+    tags: "console,ssh"
+    iconClass: fa-shield
+    template.openshift.io/provider-display-name: "tobrunet"
+    template.openshift.io/documentation-url: "https://github.com/tobru/keybox-openshift/blob/master/README.md"
+    template.openshift.io/support-url: "https://github.com/tobru/keybox-openshift/issues"
+parameters:
+- name: DB_PASSWORD
+  generate: expression
+  from: "[a-zA-Z0-9]{12}"
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    labels:
+      app: keybox
+    name: keybox
+  spec:
+    replicas: 1
+    selector:
+      app: keybox
+      deploymentconfig: keybox
+    strategy:
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        labels:
+          app: keybox
+          deploymentconfig: keybox
+      spec:
+        containers:
+        - env:
+          - name: DB_PASSWORD
+            value: ${DB_PASSWORD}
+          - name: CLIENT_IP_HEADER
+            value: X-Forwarded-For
+          image: docker.io/tobru/keybox
+          imagePullPolicy: Always
+          name: keybox
+          ports:
+          - containerPort: 8443
+            protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+          - mountPath: /opt/keybox/jetty/keybox/WEB-INF/classes/keydb
+            name: keybox-data
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        schedulerName: default-scheduler
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+        volumes:
+        - name: keybox-data
+          emptyDir: {}
+    test: false
+    triggers:
+    - type: ConfigChange
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+        - keybox
+        from:
+          kind: ImageStreamTag
+          name: keybox:latest
+          namespace: keybox
+      type: ImageChange
+- apiVersion: v1
+  kind: ImageStream
+  metadata:
+    labels:
+      app: keybox
+    name: keybox
+  spec:
+    lookupPolicy:
+      local: false
+    tags:
+    - annotations:
+        openshift.io/imported-from: docker.io/tobru/keybox
+      from:
+        kind: DockerImage
+        name: 172.30.1.1:5000/keybox/keybox:latest
+      importPolicy:
+        scheduled: true
+      name: latest
+      referencePolicy:
+        type: Source
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app: keybox
+    name: keybox
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      deploymentconfig: keybox
+    sessionAffinity: None
+    type: ClusterIP
+- apiVersion: v1
+  kind: Route
+  metadata:
+    name: keybox
+  spec:
+    port:
+      targetPort: 8080-tcp
+    tls:
+      insecureEdgeTerminationPolicy: Redirect
+      termination: edge
+    to:
+      kind: Service
+      name: keybox
+      weight: 100
+    wildcardPolicy: None

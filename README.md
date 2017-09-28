@@ -34,7 +34,31 @@ To see the defaults and available parameters, have a look into
 
 ## Deploy on OpenShift
 
-TBD
+### 0 Create OpenShift project
+
+Create an OpenShift project if not already provided by the service
+
+```
+PROJECT=keybox
+oc new-project $PROJECT
+```
+
+### 1 Deploy KeyBox
+
+```
+oc process -f https://raw.githubusercontent.com/tobru/keybox-openshift/master/keybox-template.yaml | oc -n $PROJECT create -f -
+```
+
+### 2 Configure KeyBox
+
+Navigate to the generated URL and login with the KeyBox default credentials.
+Change the admin password now!
+
+**Hint**
+
+The template is configured with an `emptyDir` storage. You might want to
+replace this with a persistent storage volume (PVC) or else you'll lose
+your configuration when the Pod restarts.
 
 ## Maintenance of this Repo
 
