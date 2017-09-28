@@ -32,8 +32,11 @@ USER 1001
 # KeyBox listens on 8443 - HTTPS
 EXPOSE 8443
 
-# KeyBos configuration template for dockerize
+# KeyBox configuration template for dockerize
 ADD KeyBoxConfig.properties.tpl /opt
+
+# Configure Jetty
+ADD jetty-start.ini /opt/keybox/jetty/start.ini
 
 ENTRYPOINT ["/usr/local/bin/dockerize"]
 CMD ["-template", \

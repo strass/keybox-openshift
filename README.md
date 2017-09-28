@@ -6,6 +6,9 @@
 This repository provides a Dockerfile and an OpenShift template
 for [KeyBox](https://github.com/skavanagh/KeyBox).
 
+**Please note**: KeyBox runs without TLS! Terminating TLS is the job of the
+loadbalancer / reverse proxy in front of it (like the OpenShift router).
+
 ## Docker run
 
 Example for running KeyBox in Docker:
@@ -16,7 +19,7 @@ docker run --name keybox \
   -d \
   --user 1000001:root \
   -e DB_PASSWORD=blablubb \
-  -p 8444:8443 \
+  -p 8080:8080 \
   -v keybox_data:/opt/keybox/jetty/keybox/WEB-INF/classes/keydb \
   local/keybox
 ```
