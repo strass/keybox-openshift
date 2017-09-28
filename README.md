@@ -32,3 +32,11 @@ To see the defaults and available parameters, have a look into
 ## Deploy on OpenShift
 
 TBD
+
+## Maintenance of this Repo
+
+This repo triggers an automated Docker Hub build and always builds the latest
+tag from master - there is no release process involved. If a new KeyBox
+release is available, the Dockerfile needs to be updated and pushed.
+This will only be done occasionally. So if it's not done in time, feel
+free to send a PR - this can speed up things.
