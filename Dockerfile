@@ -38,6 +38,9 @@ ADD KeyBoxConfig.properties.tpl /opt
 # Configure Jetty
 ADD jetty-start.ini /opt/keybox/jetty/start.ini
 
+# Custom Jetty start script
+ADD startKeyBox.sh /opt/keybox/startKeyBox.sh
+
 ENTRYPOINT ["/usr/local/bin/dockerize"]
 CMD ["-template", \
      "/opt/KeyBoxConfig.properties.tpl:/opt/keybox/jetty/keybox/WEB-INF/classes/KeyBoxConfig.properties", \
