@@ -15,12 +15,7 @@ RUN wget --quiet https://github.com/bastillion-io/Bastillion/releases/download/v
     # create db directory for later permission update
     mkdir /opt/bastillion/jetty/bastillion/WEB-INF/classes/keydb && \
     # remove default config - will be written by dockerize on startup
-    ls /opt/bastillion && \
-    ls /opt/bastillion/jetty && \
-    ls /opt/bastillion/jetty/bastillion && \
-    ls /opt/bastillion/jetty/bastillion/WEB-INF && \
-    ls /opt/bastillion/jetty/bastillion/WEB-INF/classes/ && \
-    rm /opt/bastillion/jetty/bastillion/WEB-INF/classes/KeyBoxConfig.properties && \
+    rm /opt/bastillion/jetty/bastillion/WEB-INF/classes/BastillionConfig.properties && \
     # correct permission for running as non-root (f.e. on OpenShift)
     chgrp -R 0 /opt/bastillion && \
     chmod -R g=u /opt/bastillion
@@ -38,7 +33,7 @@ USER 1001
 EXPOSE 8443
 
 # KeyBox configuration template for dockerize
-ADD KeyBoxConfig.properties.tpl /opt
+ADD KeyBoxConfig.properties.tpl /opt/BastillionConfig.properties
 
 # Configure Jetty
 ADD jetty-start.ini /opt/bastillion/jetty/start.ini
@@ -48,5 +43,5 @@ ADD startKeyBox.sh /opt/bastillion/startKeyBox.sh
 
 ENTRYPOINT ["/usr/local/bin/dockerize"]
 CMD ["-template", \
-     "/opt/KeyBoxConfig.properties.tpl:/opt/bastillion/jetty/bastillion/WEB-INF/classes/KeyBoxConfig.properties", \
+     "/opt/KeyBoxConfig.properties.tpl:/opt/bastillion/jetty/bastillion/WEB-INF/classes/BastillionConfig.properties", \
      "/opt/bastillion/startKeyBox.sh"]
