@@ -1,8 +1,8 @@
 FROM openjdk:8-slim
 
-ENV KEYBOX_VERSION=2.90.01 \
-    KEYBOX_FILENAME=2.90_01 \
-    DOCKERIZE_VERSION=0.5.0
+ENV KEYBOX_VERSION=3.08.01 \
+    KEYBOX_FILENAME=3.08_01 \
+    DOCKERIZE_VERSION=0.6.1
 
 RUN apt-get update && apt-get -y install wget && \
     wget --quiet https://github.com/skavanagh/KeyBox/releases/download/v${KEYBOX_VERSION}/keybox-jetty-v${KEYBOX_FILENAME}.tar.gz && \
