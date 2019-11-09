@@ -8,6 +8,7 @@ RUN apt-get update && apt-get -y install wget
 RUN wget --quiet https://github.com/bastillion-io/Bastillion/releases/download/v${KEYBOX_VERSION}/bastillion-jetty-v${KEYBOX_FILENAME}.tar.gz && \
     wget --quiet https://github.com/jwilder/dockerize/releases/download/v${DOCKERIZE_VERSION}/dockerize-linux-amd64-v${DOCKERIZE_VERSION}.tar.gz && \
     tar xzf bastillion-jetty-v${KEYBOX_FILENAME}.tar.gz -C /opt && \
+    ls \opt && \
     tar xzf dockerize-linux-amd64-v${DOCKERIZE_VERSION}.tar.gz -C /usr/local/bin && \
     mv /opt/bastillion-jetty /opt/bastillion && \
     rm bastillion-jetty-v${KEYBOX_FILENAME}.tar.gz dockerize-linux-amd64-v${DOCKERIZE_VERSION}.tar.gz && \
