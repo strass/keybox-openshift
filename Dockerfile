@@ -33,7 +33,7 @@ USER 1001
 EXPOSE 8443
 
 # KeyBox configuration template for dockerize
-ADD KeyBoxConfig.properties.tpl /opt/BastillionConfig.properties
+ADD KeyBoxConfig.properties.tpl /opt/BastillionConfig.properties.tpl
 
 # Configure Jetty
 ADD jetty-start.ini /opt/bastillion/jetty/start.ini
