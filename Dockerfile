@@ -5,8 +5,8 @@ ENV KEYBOX_VERSION=3.08.01 \
     DOCKERIZE_VERSION=0.6.1
 
 RUN apt-get update && apt-get -y install curl && \
-    curl https://github.com/bastillion-io/Bastillion/releases/download/v${KEYBOX_VERSION}/bastillion-jetty-v${KEYBOX_FILENAME}.tar.gz && \
-    curl https://github.com/jwilder/dockerize/releases/download/v${DOCKERIZE_VERSION}/dockerize-linux-amd64-v${DOCKERIZE_VERSION}.tar.gz && \
+    curl -L https://github.com/bastillion-io/Bastillion/releases/download/v${KEYBOX_VERSION}/bastillion-jetty-v${KEYBOX_FILENAME}.tar.gz && \
+    curl -L https://github.com/jwilder/dockerize/releases/download/v${DOCKERIZE_VERSION}/dockerize-linux-amd64-v${DOCKERIZE_VERSION}.tar.gz && \
     tar xzf bastillion-jetty-v${KEYBOX_FILENAME}.tar.gz -C /opt && \
     tar xzf dockerize-linux-amd64-v${DOCKERIZE_VERSION}.tar.gz -C /usr/local/bin && \
     mv /opt/bastillion-jetty /opt/bastillion && \
