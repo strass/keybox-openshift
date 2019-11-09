@@ -4,9 +4,9 @@ ENV KEYBOX_VERSION=3.08.01 \
     KEYBOX_FILENAME=3.08_01 \
     DOCKERIZE_VERSION=0.6.1
 
-RUN apt-get update && apt-get -y install wget && \
-    wget --quiet https://github.com/skavanagh/KeyBox/releases/download/v${KEYBOX_VERSION}/keybox-jetty-v${KEYBOX_FILENAME}.tar.gz && \
-    wget --quiet https://github.com/jwilder/dockerize/releases/download/v${DOCKERIZE_VERSION}/dockerize-linux-amd64-v${DOCKERIZE_VERSION}.tar.gz && \
+RUN apt-get update && apt-get -y install curl && \
+    curl --quiet https://github.com/skavanagh/KeyBox/releases/download/v${KEYBOX_VERSION}/keybox-jetty-v${KEYBOX_FILENAME}.tar.gz && \
+    curl --quiet https://github.com/jwilder/dockerize/releases/download/v${DOCKERIZE_VERSION}/dockerize-linux-amd64-v${DOCKERIZE_VERSION}.tar.gz && \
     tar xzf keybox-jetty-v${KEYBOX_FILENAME}.tar.gz -C /opt && \
     tar xzf dockerize-linux-amd64-v${DOCKERIZE_VERSION}.tar.gz -C /usr/local/bin && \
     mv /opt/KeyBox-jetty /opt/keybox && \
