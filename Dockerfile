@@ -15,6 +15,11 @@ RUN wget --quiet https://github.com/bastillion-io/Bastillion/releases/download/v
     # create db directory for later permission update
     mkdir /opt/bastillion/jetty/bastillion/WEB-INF/classes/keydb && \
     # remove default config - will be written by dockerize on startup
+    ls /opt/bastillion && \
+    ls /opt/bastillion/jetty && \
+    ls /opt/bastillion/jetty/bastillion && \
+    ls /opt/bastillion/jetty/bastillion/WEB-INF && \
+    ls /opt/bastillion/jetty/bastillion/WEB-INF/classes/ && \
     rm /opt/bastillion/jetty/bastillion/WEB-INF/classes/KeyBoxConfig.properties && \
     # correct permission for running as non-root (f.e. on OpenShift)
     chgrp -R 0 /opt/bastillion && \
