@@ -1,4 +1,4 @@
-FROM openjdk:8-slim
+FROM openjdk:14-slim
 
 ENV KEYBOX_VERSION=3.08.01 \
     KEYBOX_FILENAME=3.08_01 \
